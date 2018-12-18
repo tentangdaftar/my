@@ -9,13 +9,27 @@ angular
             $scope.startTime = '';
             $scope.endTime = '';
             $scope.dataemployee = {};
-            $scope.listServeGroup = {options: []};//inisialisasi dropdown
-            $scope.listType = {options: []};//inisialisasi dropdown
-            $scope.listSellingStep = {options: []};//inisialisasi dropdown
-            $scope.listReasonGroup = {options: []};//inisialisasi dropdown
-            $scope.listActivityGroup = {options: []};//inisialisasi dropdown
-            $scope.listResultGroup = {options: []};//inisialisasi dropdown
-            $scope.listProject = {options: []};//inisialisasi dropdown
+            $scope.listServeGroup = {
+                options: []
+            }; //inisialisasi dropdown
+            $scope.listType = {
+                options: []
+            }; //inisialisasi dropdown
+            $scope.listSellingStep = {
+                options: []
+            }; //inisialisasi dropdown
+            $scope.listReasonGroup = {
+                options: []
+            }; //inisialisasi dropdown
+            $scope.listActivityGroup = {
+                options: []
+            }; //inisialisasi dropdown
+            $scope.listResultGroup = {
+                options: []
+            }; //inisialisasi dropdown
+            $scope.listProject = {
+                options: []
+            }; //inisialisasi dropdown
             $scope.attendanceCycleDate = {};
             $scope.flag = "netral";
             $scope.calendarView = true;
@@ -97,7 +111,6 @@ angular
 
                 var success = function (data) {
                     $scope.attendanceCycleDate = data.result;
-
                 };
 
                 var error = function () {
@@ -107,7 +120,7 @@ angular
                 GlobalTypeFactory.getAttendanceCycleDate().then(success, error);
             };
 
-            function getActivity() {//isi dropdown activity
+            function getActivity() { //isi dropdown activity
                 var success = function (data) {
                     var list = new Array();
                     var list2 = new Array();
@@ -115,7 +128,9 @@ angular
                     $scope.listActivity = data.result;
                     $scope.listActivityGroup.options = list;
 
-                    var activitytype = $filter('filter')($scope.listActivity, {servegroupid: "ACTIVITY_TYPE_SALESSTREAM"});
+                    var activitytype = $filter('filter')($scope.listActivity, {
+                        servegroupid: "ACTIVITY_TYPE_SALESSTREAM"
+                    });
 
                     for (var a = 0; a < activitytype.length; a++) {
                         var ga = activitytype[a];
@@ -144,7 +159,9 @@ angular
                     $scope.listActivity = data.result;
                     $scope.listSellingStep.options = list;
 
-                    var sellingtypes = $filter('filter')($scope.listActivity, {servegroupid: "SELLING_STEP_ID"});
+                    var sellingtypes = $filter('filter')($scope.listActivity, {
+                        servegroupid: "SELLING_STEP_ID"
+                    });
 
                     for (var a = 0; a < sellingtypes.length; a++) {
                         var ga = sellingtypes[a];
@@ -274,11 +291,10 @@ angular
                         var wbslength = wbs.length;
 
                         if (wbslength == 15) {
-                            var projectnumber = wbs.substring(0, 8);//substring project number
+                            var projectnumber = wbs.substring(0, 8); //substring project number
 
-                        }
-                        else {
-                            var projectnumber = wbs.substring(0, 9);//substring project number
+                        } else {
+                            var projectnumber = wbs.substring(0, 9); //substring project number
 
                         }
 
@@ -289,8 +305,7 @@ angular
                                 if ($scope.insertEntity.npk == npkPM) {
                                     $scope.insertEntity.directheadName = $scope.dataemployee.employeeTemplate.directHeadName;
                                     $scope.insertEntity.directhead = $scope.dataemployee.employeeTemplate.directHead;
-                                }
-                                else {
+                                } else {
                                     $scope.namadirect = data.result[0].pmName;
                                     $scope.npkdirect = data.result[0].pmNPK;
                                     $scope.insertEntity.directheadName = data.result[0].pmName;
@@ -299,8 +314,7 @@ angular
                                 }
 
 
-                            }
-                            else {
+                            } else {
                                 $scope.namadirect = "";
                                 $scope.npkdirect = "";
                                 $scope.insertEntity.directHeadName = "";
@@ -413,8 +427,7 @@ angular
                                 //console.log("ozil" + JSON.stringify($scope.tampungAllFix))
                                 if ($scope.tampungAllFix != "" || $scope.tampungAllFix != null) {
                                     $scope.flagCoba = true;
-                                }
-                                else {//tidak ada data ditgl tsb
+                                } else { //tidak ada data ditgl tsb
                                     $scope.flagCoba = false;
                                 }
                             }
@@ -431,8 +444,7 @@ angular
 
                         if (tglklik > gabung) {
                             NotificationService.setWarningMessage("Cannot create service correction in this date");
-                        }
-                        else {
+                        } else {
                             if ($scope.mode == 'month') {
                                 $('#calendar').fullCalendar('changeView', "agendaDay")
                                 $('#calendar').fullCalendar('gotoDate', date);
@@ -447,7 +459,7 @@ angular
 
                         var startDate = new Date(start.format("DD MMM YYYY  HH:ss"));
                         var endDate = new Date(end.format("DD MMM YYYY  HH:ss"));
-                        var maximumEntryDate = addDays(new Date(start.format("DD MMM YYYY  HH:ss")), 60);
+                        var maximumEntryDate = addDays(new Date(start.format("DD MMM YYYY  HH:ss")), 7);
                         $scope.startTime = new Date(start.format("DD MMM YYYY  HH:mm"));
                         $scope.endTime = new Date(end.format("DD MMM YYYY  HH:mm"));
                         var confirm = function () {
@@ -467,137 +479,87 @@ angular
                             var awalstring = moment(new Date(awalDrag)).format("HH:mm");
                             var akhirstring = moment(new Date(akhirDrag)).format("HH:mm");
                             $scope.flagTimesheet = false;
+                            // if ($scope.flagCoba == true) { // jika ada data dihari itu
+                            //     for (var a = 0; a < $scope.tampungAllFix.length; a++) {
+                            //         var momentServeOn = $scope.tampungAllFix[a].kdserveonmoment;
+                            //         var momentServeOff = $scope.tampungAllFix[a].kdserveoffmoment;
+                            //         var ServeOnstring = moment(new Date(momentServeOn)).format("HH:mm");
+                            //         //alert(ServeOnstring)
+                            //         var ServeOffstring = moment(new Date(momentServeOff)).format("HH:mm");
+                            //         // console.log("dragawal" + awalstring)
+                            //         // console.log("dragakhir" + akhirstring)
+                            //         // console.log("serveon" + ServeOnstring)
+                            //         // console.log("serveoff" + ServeOffstring)
+                            //         if (awalstring >= ServeOnstring && akhirstring >= ServeOnstring) {
+                            //             //alert("1")
+                            //             // $scope.flagTimesheet = false;
+                            //             if (awalstring >= ServeOnstring && akhirstring < ServeOffstring) {
+                            //                 //alert("1.2")
+                            //                 $scope.flagTimesheet = true;
+                            //                 break;
+                            //             }
+                            //             if (awalstring < ServeOffstring && akhirstring >= ServeOffstring) {
+                            //                 //alert("1.3")
+                            //                 $scope.flagTimesheet = true;
+                            //                 break;
+                            //             }
+                            //
+                            //         } else if (awalstring <= ServeOnstring && akhirstring <= ServeOnstring) {
+                            //             //alert("2")
+                            //             $scope.flagTimesheet = false;
+                            //
+                            //             // if(awalstring <= ServeOnstring && akhirstring >= ServeOffstring){
+                            //             //     //alert("2.2")
+                            //             //     $scope.flagTimesheet = true;
+                            //             //     break;
+                            //             // }
+                            //         } else {
+                            //             $scope.flagTimesheet = true;
+                            //             break;
+                            //         }
+                            //
+                            //     }
+                            //
+                            //     if ($scope.flagTimesheet == true) { //jika tdk didalam irisan tdk bisa
+                            //         NotificationService.setWarningMessage("Cannot create service correction in the same time");
+                            //     } else {
+                            //         $scope.startdate = true;
+                            //         $scope.endate = true;
+                            //         $scope.starttimebcdis = true;
+                            //         $scope.endtimebcdis = true;
+                            //         $scope.calendarView = false;
+                            //         $scope.showDefaultPanel = true;
+                            //         $scope.showPanelForBCSales = false;
+                            //         $scope.showCalendar = false;
+                            //         $scope.insertEntity.startTime = start;
+                            //         $scope.insertEntity.endTime = end;
+                            //         $scope.insertEntity.startTimeString = start.format("DD-MM-YYYY HH:mm");
+                            //         $scope.insertEntity.endTimeString = end.format("DD-MM-YYYY HH:mm");
+                            //         $scope.actionkoreksi = true;
+                            //     }
+                            // }
 
-                            if ($scope.flagCoba == true) {// jika ada data dihari itu
-                                for (var a = 0; a < $scope.tampungAllFix.length; a++) {
-                                    var momentServeOn = $scope.tampungAllFix[a].kdserveonmoment;
-                                    var momentServeOff = $scope.tampungAllFix[a].kdserveoffmoment;
-                                    var ServeOnstring = moment(new Date(momentServeOn)).format("HH:mm");
-                                    //alert(ServeOnstring)
-                                    var ServeOffstring = moment(new Date(momentServeOff)).format("HH:mm");
-                                    // console.log("dragawal" + awalstring)
-                                    // console.log("dragakhir" + akhirstring)
-                                    // console.log("serveon" + ServeOnstring)
-                                    // console.log("serveoff" + ServeOffstring)
-                                    if (awalstring >= ServeOnstring && akhirstring >= ServeOnstring) {
-                                        //alert("1")
-                                        // $scope.flagTimesheet = false;
-                                        if (awalstring >= ServeOnstring && akhirstring < ServeOffstring) {
-                                            //alert("1.2")
-                                            $scope.flagTimesheet = true;
-                                            break;
-                                        }
-                                        if (awalstring < ServeOffstring && akhirstring >= ServeOffstring) {
-                                            //alert("1.3")
-                                            $scope.flagTimesheet = true;
-                                            break;
-                                        }
 
-                                    }
-                                    else if (awalstring <= ServeOnstring && akhirstring <= ServeOnstring) {
-                                        //alert("2")
-                                        $scope.flagTimesheet = false;
-
-                                        // if(awalstring <= ServeOnstring && akhirstring >= ServeOffstring){
-                                        //     //alert("2.2")
-                                        //     $scope.flagTimesheet = true;
-                                        //     break;
-                                        // }
-                                    }
-                                    else {
-                                        $scope.flagTimesheet = true;
-                                        break;
-                                    }
-
-                                }
-                                if ($scope.flagTimesheet == true) { //jika tdk didalam irisan tdk bisa
-                                    NotificationService.setWarningMessage("Cannot create service correction in the same time");
-                                }
-                                else {
-                                    $scope.startdate = true;
-                                    $scope.endate = true;
-                                    $scope.starttimebcdis = true;
-                                    $scope.endtimebcdis = true;
-                                    $scope.calendarView = false;
-                                    $scope.showDefaultPanel = true;
-                                    $scope.showPanelForBCSales = false;
-                                    $scope.showCalendar = false;
-                                    $scope.insertEntity.startTime = start;
-                                    $scope.insertEntity.endTime = end;
-                                    $scope.insertEntity.startTimeString = start.format("DD-MM-YYYY HH:mm");
-                                    $scope.insertEntity.endTimeString = end.format("DD-MM-YYYY HH:mm");
-                                    $scope.actionkoreksi = true;
-                                }
-                            }
-                            else { //tidak ada data di hari itu, koreksi biasa
+                            if (startDate.getTime() >= startCycle.getTime()) {
+                                //console.log("\n" + startDate.toLocaleDateString() + "\n" + endCycle.toLocaleDateString());
                                
-
-                                    ////console.log("\n" + startDate.toLocaleDateString() + "\n" + endCycle.toLocaleDateString());
-                                   
-                                       
-                                                $scope.startdate = true;
-                                                $scope.endate = true;
-                                                $scope.starttimebcdis = true;
-                                                $scope.endtimebcdis = true;
-                                                $scope.calendarView = false;
-                                                $scope.showDefaultPanel = true;
-                                                $scope.showPanelForBCSales = false;
-                                                $scope.showCalendar = false;
-                                                // $scope.nonbc = true;
-                                                $scope.insertEntity.startTime = start;
-                                                $scope.insertEntity.endTime = end;
-                                                $scope.insertEntity.startTimeString = start.format("DD-MM-YYYY HH:mm");
-                                                // alert($scope.insertEntity.startTimeString);
-                                                $scope.insertEntity.endTimeString = end.format("DD-MM-YYYY HH:mm");
-                                                $scope.actionkoreksi = true;
-                                            
-                                       
-                                    
-                                
+                                            $scope.startdate = true;
+                                            $scope.endate = true;
+                                            $scope.starttimebcdis = true;
+                                            $scope.endtimebcdis = true;
+                                            $scope.calendarView = false;
+                                            $scope.showDefaultPanel = true;
+                                            $scope.showPanelForBCSales = false;
+                                            $scope.showCalendar = false;
+                                            // $scope.nonbc = true;
+                                            $scope.insertEntity.startTime = start;
+                                            $scope.insertEntity.endTime = end;
+                                            $scope.insertEntity.startTimeString = start.format("DD-MM-YYYY HH:mm");
+                                            // alert($scope.insertEntity.startTimeString);
+                                            $scope.insertEntity.endTimeString = end.format("DD-MM-YYYY HH:mm");
+                                            $scope.actionkoreksi = true;
+                                        
                             }
-
-                            /*
-                            $scope.tanggal = start.format("YYYYMMDD");//tanggal klik attendance
-                            var tglskg = tgl.getDate();//get tanggal
-                            var blnskg = (tgl.getMonth() + 1);//get month
-                            var thnskg = tgl.getFullYear();//get tahun
-                            var gabung = thnskg + '' + blnskg + tglskg;//gabung tglbulantahun
-                            $scope.waktuterakhir = end.format("HH:ss");//ambil jam dari serve off calendar
-                            var jamskg = tgl.getHours() + ':' + tgl.getMinutes();//ambil jam sekarang
-
-
-                            if ($scope.tanggal == gabung) {
-                                if (jamskg < $scope.waktuterakhir) {
-                                    NotificationService.setWarningMessage("Cannot create service correction in this hour");
-                                }
-                                else {
-                                    var role = $scope.dataemployee.employeeTemplate.customfield2;
-
-                                    $scope.calendarView = false;
-                                    $scope.showDefaultPanel = true;
-                                    $scope.showPanelForBCSales = false;
-                                    $scope.showCalendar = false;
-                                    // $scope.nonbc = true;
-                                    $scope.insertEntity.startTime = start;
-                                    $scope.insertEntity.endTime = end;
-                                    $scope.insertEntity.startTimeString = start.format("DD-MM-YYYY HH:mm");
-                                    $scope.insertEntity.endTimeString = end.format("DD-MM-YYYY HH:mm");
-                                }
-                            }
-                            else {
-                                var role = $scope.dataemployee.employeeTemplate.customfield2;
-
-                                $scope.calendarView = false;
-                                $scope.showDefaultPanel = true;
-                                $scope.showPanelForBCSales = false;
-                                $scope.showCalendar = false;
-                                // $scope.nonbc = true;
-                                $scope.insertEntity.startTime = start;
-                                $scope.insertEntity.endTime = end;
-                                $scope.insertEntity.startTimeString = start.format("DD-MM-YYYY HH:mm");
-                                $scope.insertEntity.endTimeString = end.format("DD-MM-YYYY HH:mm");
-                            }*/
-
                         };
 
                         if ($scope.mode == 'agendaDay') {
@@ -609,13 +571,13 @@ angular
                         if (calEvent.url) {
                             return false;
                         }
-                        $scope.serveonlong = calEvent.kdserveonmoment;//waktu dalam long
+                        $scope.serveonlong = calEvent.kdserveonmoment; //waktu dalam long
                         $scope.serveofflong = calEvent.kdserveoffmoment;
                         $scope.serveon = calEvent.kdserveon;
                         $scope.status = calEvent.status;
                         var startCycle = new Date($scope.attendanceCycleDate.from);
                         var endCycle = new Date($scope.attendanceCycleDate.to);
-                        var maximumEntryDate = moment($scope.serveonlong).add(60, 'days')
+                        var maximumEntryDate = moment($scope.serveonlong).add(7, 'days');
 
                         var tgl = new Date();
                         endCycle.setHours(23);
@@ -628,24 +590,19 @@ angular
                                     if ($scope.serveonlong <= tgl.getTime()) {
                                         if (tgl.getTime() <= maximumEntryDate) {
                                             $scope.actionkoreksi = true;
-                                        }
-                                        else {
+                                        } else {
                                             $scope.actionkoreksi = false;
                                         }
-                                    }
-                                    else {
+                                    } else {
                                         $scope.actionkoreksi = false;
                                     }
-                                }
-                                else {
+                                } else {
                                     $scope.actionkoreksi = false;
                                 }
-                            }
-                            else {
+                            } else {
                                 $scope.actionkoreksi = false;
                             }
-                        }
-                        else {
+                        } else {
                             $scope.actionkoreksi = false;
                         }
 
@@ -692,12 +649,11 @@ angular
                         }
 
                     },
-                    googleCalendarApiKey: 'AIzaSyBIE73sd-u57R8TVTaCTWzrDNeQKbeepy8',//key API google developers
-                    eventSources: [
-                        {
-                            googleCalendarId: 'en.indonesian#holiday@group.v.calendar.google.com',
-                            color: 'red'
-                        },
+                    googleCalendarApiKey: 'AIzaSyBIE73sd-u57R8TVTaCTWzrDNeQKbeepy8', //key API google developers
+                    eventSources: [{
+                        googleCalendarId: 'en.indonesian#holiday@group.v.calendar.google.com',
+                        color: 'red'
+                    },
                         {
 
                             events: function (start, end, timezone, callback) {
@@ -718,26 +674,22 @@ angular
                                         var flagserveoff = "";
                                         if (display.codecase == "Y") {
                                             flagserveoff = "Auto Serve Off";
-                                        }
-                                        else {
+                                        } else {
                                             flagserveoff = "";
                                         }
                                         if (tipene == 40) {
                                             warna = '#3498DB';
-                                        }
-                                        else if (tipene == 20) {
+                                        } else if (tipene == 20) {
                                             warna = '#1ABC9C';
-                                        }
-                                        else if (tipene == 10) {
+                                        } else if (tipene == 10) {
                                             warna = '#3498DB';
                                         }
 
 
-                                        if(display.timeSheets.description != null || display.timeSheets.description != "" ){
+                                        if (display.timeSheets.description != null || display.timeSheets.description != "") {
                                             var title = display.timeSheets.serve_group_name + "\n" + display.timeSheets.activity_name + "\n" + display.timeSheets.description + "\n" + flagserveoff;
-                                        }
-                                        else{
-                                            var title = display.timeSheets.serve_group_name + "\n" + display.timeSheets.activity_name + "\n"  + flagserveoff;
+                                        } else {
+                                            var title = display.timeSheets.serve_group_name + "\n" + display.timeSheets.activity_name + "\n" + flagserveoff;
                                         }
                                         var tes = {
                                             id: display.id,
@@ -833,12 +785,13 @@ angular
 
                 if (endbc < startbc) {
                     NotificationService.setWarningMessage("Serve off more than Serve On");
-                }
-                else {
+                } else {
 
                     if ($scope.flag == "edit") {
                         if ($scope.insertEntity.koreksireasonId != undefined && $scope.insertEntity.koreksireasonId != '' && $scope.insertEntity.koreksireasonId != null) {
-                            var correction = $filter('filter')($scope.listReasonGroup.options, {id: $scope.insertEntity.koreksireasonId});
+                            var correction = $filter('filter')($scope.listReasonGroup.options, {
+                                id: $scope.insertEntity.koreksireasonId
+                            });
                             if (correction.length > 0) {
                                 var sg = correction[0];
                                 $scope.insertEntity.koreksireasonName = sg.title;
@@ -846,7 +799,9 @@ angular
                             if ($scope.endTime != undefined && $scope.endTime != '' && $scope.endTime != null) {
 
                                 if ($scope.insertEntity.resultID != undefined && $scope.insertEntity.resultID != '' && $scope.insertEntity.resultID != null) {
-                                    var result = $filter('filter')($scope.listResultGroup.options, {id: $scope.insertEntity.resultID});
+                                    var result = $filter('filter')($scope.listResultGroup.options, {
+                                        id: $scope.insertEntity.resultID
+                                    });
                                     if (result.length > 0) {
                                         var sg = result[0];
                                         $scope.insertEntity.resultname = sg.title;
@@ -855,35 +810,31 @@ angular
                                         if ($scope.insertEntity.achievement != undefined && $scope.insertEntity.achievement != '' && $scope.insertEntity.achievement != null) {
                                             if ($scope.insertEntity.nextactivitydescription != undefined && $scope.insertEntity.nextactivitydescription != '' && $scope.insertEntity.nextactivitydescription != null) {
                                                 edit = true;
-                                            }
-                                            else {
+                                            } else {
                                                 NotificationService.setWarningMessage("Next Description is required");
                                             }
-                                        }
-                                        else {
+                                        } else {
                                             NotificationService.setWarningMessage("Achievement is required");
                                         }
-                                    }
-                                    else {
+                                    } else {
                                         NotificationService.setWarningMessage("Description is required");
                                     }
-                                }
-                                else {
+                                } else {
                                     NotificationService.setWarningMessage("Activity is required");
                                 }
 
-                            }
-                            else {
+                            } else {
                                 NotificationService.setWarningMessage("End Date is required");
                             }
-                        }
-                        else {
+                        } else {
                             NotificationService.setWarningMessage("Correction Reason is required");
                         }
                         if (edit == true) {
                             var tes = moment(new Date($scope.insertEntity.nextactivitydateString)).format("DD-MM-YYYY");
                             $scope.insertEntity.nextactivitydateString = tes;
-                            var result = $filter('filter')($scope.listResultGroup.options, {id: $scope.insertEntity.resultID});
+                            var result = $filter('filter')($scope.listResultGroup.options, {
+                                id: $scope.insertEntity.resultID
+                            });
                             if (result.length > 0) {
                                 var sg = result[0];
                                 $scope.insertEntity.resultname = sg.title;
@@ -911,8 +862,7 @@ angular
                                         $timeout(function () {
                                             $window.location.reload();
                                         }, 1000);
-                                    }
-                                    else {
+                                    } else {
                                         NotificationService.setWarningMessage("error");
                                     }
 
@@ -926,12 +876,14 @@ angular
                             UIkit.modal.confirm("Do you want to edit this data ?", confirm);
                         }
 
-                    }//masuk insert
+                    } //masuk insert
                     else {
 
                         if ($scope.insertEntity.koreksireasonId != undefined && $scope.insertEntity.koreksireasonId != '' && $scope.insertEntity.koreksireasonId != null) {
                             // ////console.log("masuk");
-                            var correction = $filter('filter')($scope.listReasonGroup.options, {id: $scope.insertEntity.koreksireasonId});
+                            var correction = $filter('filter')($scope.listReasonGroup.options, {
+                                id: $scope.insertEntity.koreksireasonId
+                            });
                             if (correction.length > 0) {
                                 var sg = correction[0];
                                 // ////console.log("Json stringify" + JSON.stringify(sg));
@@ -939,7 +891,9 @@ angular
                             }
 
                             if ($scope.insertEntity.servegroupID != undefined && $scope.insertEntity.servegroupID != '' && $scope.insertEntity.servegroupID != null) {
-                                var servegroup = $filter('filter')($scope.listServeGroup.options, {id: $scope.insertEntity.servegroupID});
+                                var servegroup = $filter('filter')($scope.listServeGroup.options, {
+                                    id: $scope.insertEntity.servegroupID
+                                });
                                 if (servegroup.length > 0) {
                                     var sg = servegroup[0];
                                     $scope.insertEntity.servegroupname = sg.title;
@@ -950,7 +904,9 @@ angular
                                 } else {
                                     if ($scope.insertEntity.assignmentid != undefined && $scope.insertEntity.assignmentid != '' && $scope.insertEntity.assignmentid != null) {
                                         next = true;
-                                        var assignment = $filter('filter')($scope.listProject.options, {id: $scope.insertEntity.assignmentid});
+                                        var assignment = $filter('filter')($scope.listProject.options, {
+                                            id: $scope.insertEntity.assignmentid
+                                        });
                                         if (assignment.length > 0) {
                                             var sg = assignment[0];
                                             $scope.insertEntity.assignmentName = sg.title;
@@ -962,27 +918,35 @@ angular
 
                                 if (next) {
                                     if ($scope.insertEntity.activityID != undefined && $scope.insertEntity.activityID != '' && $scope.insertEntity.activityID != null) {
-                                        var activity = $filter('filter')($scope.listActivityGroup.options, {id: $scope.insertEntity.activityID});
+                                        var activity = $filter('filter')($scope.listActivityGroup.options, {
+                                            id: $scope.insertEntity.activityID
+                                        });
                                         if (activity.length > 0) {
                                             var sg = activity[0];
                                             $scope.insertEntity.activityname = sg.title;
                                         }
                                         if ($scope.insertEntity.sellingstepid != undefined && $scope.insertEntity.sellingstepid != '' && $scope.insertEntity.sellingstepid != null) {
-                                            var sellingstep = $filter('filter')($scope.listSellingStep.options, {id: $scope.insertEntity.sellingstepid});
+                                            var sellingstep = $filter('filter')($scope.listSellingStep.options, {
+                                                id: $scope.insertEntity.sellingstepid
+                                            });
                                             if (sellingstep.length > 0) {
                                                 var sg = sellingstep[0];
                                                 $scope.insertEntity.sellingstepname = sg.title;
                                             }
 
                                             if ($scope.insertEntity.typeid != undefined && $scope.insertEntity.typeid != '' && $scope.insertEntity.typeid != null) {
-                                                var type = $filter('filter')($scope.listType.options, {id: $scope.insertEntity.typeid});
+                                                var type = $filter('filter')($scope.listType.options, {
+                                                    id: $scope.insertEntity.typeid
+                                                });
                                                 if (type.length > 0) {
                                                     var sg = type[0];
                                                     $scope.insertEntity.typename = sg.title;
                                                 }
 
                                                 if ($scope.insertEntity.resultID != undefined && $scope.insertEntity.resultID != '' && $scope.insertEntity.resultID != null) {
-                                                    var result = $filter('filter')($scope.listResultGroup.options, {id: $scope.insertEntity.resultID});
+                                                    var result = $filter('filter')($scope.listResultGroup.options, {
+                                                        id: $scope.insertEntity.resultID
+                                                    });
                                                     if (result.length > 0) {
                                                         var sg = result[0];
                                                         $scope.insertEntity.resultname = sg.title;
@@ -995,47 +959,36 @@ angular
 
                                                                     insert = true;
 
-                                                                }
-                                                                else {
+                                                                } else {
                                                                     NotificationService.setWarningMessage("Next Activity Description is required");
                                                                 }
-                                                            }
-                                                            else {
+                                                            } else {
                                                                 NotificationService.setWarningMessage("Next Activity Date is required");
                                                             }
 
-                                                        }
-                                                        else {
+                                                        } else {
                                                             NotificationService.setWarningMessage("Achievement is required");
                                                         }
-                                                    }
-
-                                                    else {
+                                                    } else {
                                                         NotificationService.setWarningMessage("Description is required");
                                                     }
-                                                }
-                                                else {
+                                                } else {
                                                     NotificationService.setWarningMessage("Result is required");
                                                 }
-                                            }
-                                            else {
+                                            } else {
                                                 NotificationService.setWarningMessage("Type is required");
                                             }
-                                        }
-                                        else {
+                                        } else {
                                             NotificationService.setWarningMessage("Selling Step is required");
                                         }
-                                    }
-                                    else {
+                                    } else {
                                         NotificationService.setWarningMessage("Category is required");
                                     }
                                 }
-                            }
-                            else {
+                            } else {
                                 NotificationService.setWarningMessage("Serve Group is required");
                             }
-                        }
-                        else {
+                        } else {
                             NotificationService.setWarningMessage("Correction Reason is required");
                         }
                         if (insert == true) {
@@ -1050,8 +1003,7 @@ angular
                                             $window.location.reload();
                                         }, 1000);
 
-                                    }
-                                    else {
+                                    } else {
                                         NotificationService.setSuccessMessage(data.description);
                                     }
 
@@ -1076,17 +1028,20 @@ angular
                 var xx = moment(new Date(end)).format("DD-MM-YYYY HH:mm");
                 if (end < start) {
                     NotificationService.setWarningMessage("Serve off more than Serve On");
-                }
-                else {
+                } else {
                     if ($scope.flag == "edit") {
                         if ($scope.insertEntity.koreksireasonId != undefined && $scope.insertEntity.koreksireasonId != '' && $scope.insertEntity.koreksireasonId != null) {
-                            var correction = $filter('filter')($scope.listReasonGroup.options, {id: $scope.insertEntity.koreksireasonId});
+                            var correction = $filter('filter')($scope.listReasonGroup.options, {
+                                id: $scope.insertEntity.koreksireasonId
+                            });
                             if (correction.length > 0) {
                                 var sg = correction[0];
                                 $scope.insertEntity.koreksireasonName = sg.title;
                             }
                             if ($scope.insertEntity.resultID != undefined && $scope.insertEntity.resultID != '' && $scope.insertEntity.resultID != null) {
-                                var result = $filter('filter')($scope.listResultGroup.options, {id: $scope.insertEntity.resultID});
+                                var result = $filter('filter')($scope.listResultGroup.options, {
+                                    id: $scope.insertEntity.resultID
+                                });
                                 if (result.length > 0) {
                                     var sg = result[0];
                                     $scope.insertEntity.resultname = sg.title;
@@ -1097,24 +1052,19 @@ angular
                                         //edit = true;
                                         if ($scope.insertEntity.achievement != undefined && $scope.insertEntity.achievement != '' && $scope.insertEntity.achievement != null) {
                                             edit = true;
-                                        }
-                                        else {
+                                        } else {
                                             NotificationService.setWarningMessage("Achievement is required");
                                         }
-                                    }
-                                    else {
+                                    } else {
                                         NotificationService.setWarningMessage("Description is required");
                                     }
-                                }
-                                else {
+                                } else {
                                     NotificationService.setWarningMessage("End Date is required");
                                 }
-                            }
-                            else {
+                            } else {
                                 NotificationService.setWarningMessage("Activity is required");
                             }
-                        }
-                        else {
+                        } else {
                             NotificationService.setWarningMessage("Correction Reason is required");
                         }
                         if (edit == true) {
@@ -1143,8 +1093,7 @@ angular
                                             $window.location.reload();
                                         }, 1000);
 
-                                    }
-                                    else {
+                                    } else {
                                         NotificationService.setWarningMessage("error");
                                     }
 
@@ -1159,11 +1108,12 @@ angular
                             UIkit.modal.confirm("Do you want to edit this data ?", confirm);
                         }
 
-                    }
-                    else {
+                    } else {
                         if ($scope.insertEntity.koreksireasonId != undefined && $scope.insertEntity.koreksireasonId != '' && $scope.insertEntity.koreksireasonId != null) {
                             //////console.log("masuk");
-                            var correction = $filter('filter')($scope.listReasonGroup.options, {id: $scope.insertEntity.koreksireasonId});
+                            var correction = $filter('filter')($scope.listReasonGroup.options, {
+                                id: $scope.insertEntity.koreksireasonId
+                            });
                             if (correction.length > 0) {
                                 var sg = correction[0];
                                 //////console.log("Json stringify" + JSON.stringify(sg));
@@ -1171,7 +1121,9 @@ angular
                             }
 
                             if ($scope.insertEntity.servegroupID != undefined && $scope.insertEntity.servegroupID != '' && $scope.insertEntity.servegroupID != null) {
-                                var servegroup = $filter('filter')($scope.listServeGroup.options, {id: $scope.insertEntity.servegroupID});
+                                var servegroup = $filter('filter')($scope.listServeGroup.options, {
+                                    id: $scope.insertEntity.servegroupID
+                                });
                                 if (servegroup.length > 0) {
                                     var sg = servegroup[0];
                                     $scope.insertEntity.servegroupname = sg.title;
@@ -1182,7 +1134,9 @@ angular
                                 } else {
                                     if ($scope.insertEntity.assignmentid != undefined && $scope.insertEntity.assignmentid != '' && $scope.insertEntity.assignmentid != null) {
                                         next = true;
-                                        var assignment = $filter('filter')($scope.listProject.options, {id: $scope.insertEntity.assignmentid});
+                                        var assignment = $filter('filter')($scope.listProject.options, {
+                                            id: $scope.insertEntity.assignmentid
+                                        });
                                         if (assignment.length > 0) {
                                             var sg = assignment[0];
                                             $scope.insertEntity.assignmentName = sg.title;
@@ -1194,13 +1148,17 @@ angular
 
                                 if (next) {
                                     if ($scope.insertEntity.activityID != undefined && $scope.insertEntity.activityID != '' && $scope.insertEntity.activityID != null) {
-                                        var activity = $filter('filter')($scope.listActivityGroup.options, {id: $scope.insertEntity.activityID});
+                                        var activity = $filter('filter')($scope.listActivityGroup.options, {
+                                            id: $scope.insertEntity.activityID
+                                        });
                                         if (activity.length > 0) {
                                             var sg = activity[0];
                                             $scope.insertEntity.activityname = sg.title;
                                         }
                                         if ($scope.insertEntity.resultID != undefined && $scope.insertEntity.resultID != '' && $scope.insertEntity.resultID != null) {
-                                            var result = $filter('filter')($scope.listResultGroup.options, {id: $scope.insertEntity.resultID});
+                                            var result = $filter('filter')($scope.listResultGroup.options, {
+                                                id: $scope.insertEntity.resultID
+                                            });
                                             if (result.length > 0) {
                                                 var sg = result[0];
                                                 $scope.insertEntity.resultname = sg.title;
@@ -1208,31 +1166,25 @@ angular
                                             if ($scope.insertEntity.description != undefined && $scope.insertEntity.description != '' && $scope.insertEntity.description != null) {
                                                 if ($scope.insertEntity.achievement != undefined && $scope.insertEntity.achievement != '' && $scope.insertEntity.achievement != null) {
                                                     insert = true;
-                                                }
-                                                else {
+                                                } else {
                                                     NotificationService.setWarningMessage("Achievement is required");
                                                 }
-                                            }
-                                            else {
+                                            } else {
                                                 NotificationService.setWarningMessage("Description is required");
                                             }
-                                        }
-                                        else {
+                                        } else {
                                             NotificationService.setWarningMessage("Result is required");
                                         }
-                                    }
-                                    else {
+                                    } else {
 
                                         NotificationService.setWarningMessage("Activity is required");
 
                                     }
                                 }
-                            }
-                            else {
+                            } else {
                                 NotificationService.setWarningMessage("Serve Group is required");
                             }
-                        }
-                        else {
+                        } else {
                             NotificationService.setWarningMessage("Correction Reason is required");
                         }
 
@@ -1247,8 +1199,7 @@ angular
                                             $window.location.reload();
                                         }, 1000);
 
-                                    }
-                                    else {
+                                    } else {
                                         NotificationService.setSuccessMessage(data.description);
                                     }
 
@@ -1320,15 +1271,16 @@ angular
 
                 //////console.log(" $scope.request.servegroup;" + $scope.request.servegroup);
                 if ($scope.insertEntity.servegroupID != null && $scope.insertEntity.servegroupID != '' && $scope.insertEntity.servegroupID != undefined) {
-                    var servegroup = $filter('filter')($scope.listActivity, {servegroupid: $scope.insertEntity.servegroupID});
+                    var servegroup = $filter('filter')($scope.listActivity, {
+                        servegroupid: $scope.insertEntity.servegroupID
+                    });
 
                     var role = $scope.dataemployee.employeeTemplate.customfield2;
-                    if (role == 'BC' && $scope.insertEntity.servegroupID == 'SL') {//login custom field sebagai BC
+                    if (role == 'BC' && $scope.insertEntity.servegroupID == 'SL') { //login custom field sebagai BC
                         if ($scope.insertEntity.servegroupID == 'INT') {
                             $scope.projecthide = false;
 
-                        }
-                        else {
+                        } else {
                             $scope.projecthide = true;
                         }
                         $scope.calendarView = false;
@@ -1339,8 +1291,7 @@ angular
                         if ($scope.insertEntity.servegroupID == 'INT') {
                             $scope.projecthide = false;
 
-                        }
-                        else {
+                        } else {
                             $scope.projecthide = true;
                         }
                         $scope.calendarView = false;
@@ -1374,10 +1325,14 @@ angular
                         var assignments = [];
                         if ($scope.insertEntity.servegroupID == 'PRJI' || $scope.insertEntity.servegroupID == 'PRJO') {
                             //////console.log("2")
-                            assignments = $filter('filter')($scope.listAssignment, {type: '1'});
+                            assignments = $filter('filter')($scope.listAssignment, {
+                                type: '1'
+                            });
                         } else {
                             //////console.log("3")
-                            assignments = $filter('filter')($scope.listAssignment, {type: '2'});
+                            assignments = $filter('filter')($scope.listAssignment, {
+                                type: '2'
+                            });
                         }
 
                         //////console.log("4")
@@ -1444,12 +1399,11 @@ angular
                     $scope.insertEntity.nextactivitydateString = new Date($scope.datenext);
                     $scope.insertEntity.nextactivitydescription = $scope.desnext;
 
-                    if ($scope.kodeserve == 'SL' || $scope.kodeserve == 'BC') {//login custom field sebagai BC
+                    if ($scope.kodeserve == 'SL' || $scope.kodeserve == 'BC') { //login custom field sebagai BC
                         if ($scope.insertEntity.servegroupID == 'INT') {
                             $scope.projecthide = false;
 
-                        }
-                        else {
+                        } else {
                             $scope.projecthide = true;
                         }
                         $scope.showDefaultPanel = false;
@@ -1475,8 +1429,7 @@ angular
                         if ($scope.insertEntity.servegroupID == 'INT') {
                             $scope.projecthide = false;
 
-                        }
-                        else {
+                        } else {
                             $scope.projecthide = true;
                         }
                         $scope.showDefaultPanel = true;
@@ -1502,5 +1455,4 @@ angular
                 return new Date(theDate.getTime() + days * 24 * 60 * 60 * 1000);
             }
         }
-    )
-;
+    );
